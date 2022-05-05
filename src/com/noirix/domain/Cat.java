@@ -1,64 +1,47 @@
 package com.noirix.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-/*Класс - шаблон создания объекта*/
-public class Cat {
-    {
-        System.out.println("First logic block");
-        weight = 888;
-    }
+public class Cat extends Animal {
 
     public static int count = 0;
 
     //Предпкомпилиуемая константа
-    public static final String CONSTANT_WITH_UNDERSCORE;
+    public static final String CONSTANT_WITH_UNDERSCORE = "cat";
 
     //Константа класса
-    private final int constantNumber;
+    private final int constantNumber = 10;
 
     /*Поля класса = характеристики*/
     private String catName = "Default Cat";
 
     private double weight = 3;
 
-    static {
-        CONSTANT_WITH_UNDERSCORE = "CAT";
-        System.out.println("First static block");
-        count = 100;
-    }
-
-    {
-        System.out.println("Second logic block");
-        weight = 100;
-    }
-
     private String color = "Black";
 
     /*Конструктор по умолчанию*/
     public Cat() {
-        System.out.println("Default constructor");
-        constantNumber = 10;
+        System.out.println("In Cat Default constructor");
     }
 
     /*Перегрузка контруктора*/
     public Cat(String catName, double weight, String color) {
+        super();
+        System.out.println("In Cat constructor with params");
         this.catName = catName;
         this.weight = weight;
         this.color = color;
-        constantNumber = 10;
     }
 
     public Cat(double weight, String color) {
         this.weight = weight;
         this.color = color;
-        constantNumber = 10;
     }
 
     public Cat(String catName, double weight) {
         this.catName = catName;
         this.weight = weight;
-        constantNumber = 10;
     }
 
     /*Getter/Setter
@@ -79,16 +62,6 @@ public class Cat {
     /*this - ссылка на самого себя, на текущий объект при использовании*/
     public void setCatName(String catName) {
         this.catName = catName;
-    }
-
-    {
-        System.out.println("Third logic block");
-        weight = 999;
-    }
-
-    static {
-        System.out.println("Second static block");
-        count = 888;
     }
 
     public double getWeight() {
@@ -117,24 +90,33 @@ public class Cat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        //Приведение типа одного объекта к другому
+        if (!super.equals(o)) return false;
         Cat cat = (Cat) o;
+        return constantNumber == cat.constantNumber && Double.compare(cat.weight, weight) == 0 && Objects.equals(catName, cat.catName) && Objects.equals(color, cat.color);
+    }
 
-        if (Double.compare(cat.weight, weight) != 0) return false;
-        if (catName != null ? !catName.equals(cat.catName) : cat.catName != null) return false;
-        return color != null ? color.equals(cat.color) : cat.color == null;
+    @Override
+    public void process() {
+        System.out.println("Process realization inside Cat");
+    }
+
+    public void process(String s, String p) {
+        System.out.println(s.toUpperCase() + s.toLowerCase());
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = catName != null ? catName.hashCode() : 0;
-        temp = Double.doubleToLongBits(weight);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), constantNumber, catName, weight, color);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Cat{" +
+                "constantNumber=" + constantNumber +
+                ", catName='" + catName + '\'' +
+                ", weight=" + weight +
+                ", color='" + color + '\'' +
+                "} ";
     }
 
     //Ctrl + Alt + O - import optimization
@@ -147,16 +129,5 @@ public class Cat {
     public double sumOfTwoElements(String a, String b) {
         return Double.parseDouble(a) + Double.parseDouble(b);
     }
-
-
-    @Override
-    public String toString() {
-        return "Cat{" +
-                "catName='" + catName + '\'' +
-                ", weight=" + weight +
-                ", color='" + color + '\'' +
-                '}';
-    }
-
 
 }
