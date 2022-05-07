@@ -20,6 +20,8 @@ public class Cat extends Animal {
 
     private String color = "Black";
 
+    private Gender gender = Gender.NOT_SELECTED;
+
     /*Конструктор по умолчанию*/
     public Cat() {
         System.out.println("In Cat Default constructor");
