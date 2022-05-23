@@ -3,7 +3,7 @@ package com.noirix.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Cat extends Animal {
+public class Cat extends Animal implements Comparable<Cat> {
 
     public static int count = 0;
 
@@ -12,6 +12,8 @@ public class Cat extends Animal {
 
     //Константа класса
     private final int constantNumber = 10;
+
+    private String id; // Long/String/primitive type of unique identifier for object for search this object
 
     /*Поля класса = характеристики*/
     private String catName = "Default Cat";
@@ -132,4 +134,8 @@ public class Cat extends Animal {
         return Double.parseDouble(a) + Double.parseDouble(b);
     }
 
+    @Override
+    public int compareTo(Cat o) {
+        return this.catName.compareToIgnoreCase(o.getCatName());
+    }
 }

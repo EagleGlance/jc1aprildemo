@@ -1,3 +1,4 @@
+
 package com.noirix.collections;
 
 import com.noirix.domain.Cat;
@@ -8,8 +9,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListsTest {
+    static {
+        i = 5;
+    }
+
+    static int i = 6;
 
     public static void main(String[] args) {
+
+        System.out.println(i);
+
+
+        byte[] bytes = new byte[]{49, 50, 51};
+
+        String s = new String(bytes);
+        System.out.println(s);
+
+        System.out.println("u000a");
 
 
         Cat cat = new Cat();
@@ -25,13 +41,9 @@ public class ListsTest {
         cats.add(cat);
 
         long end = System.currentTimeMillis();
-
-        System.out.println(cats.get(1));
-        System.out.println(cats.remove(new Cat()));
-
-
+//        System.out.println(cats.get(1));
+//        System.out.println(cats.remove(new Cat()));
         long result = end - start;
-
         System.out.println("Array list process: " + result);
 
         List<Cat> cats1 = cats.subList(1, 4);
