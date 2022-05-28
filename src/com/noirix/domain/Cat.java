@@ -130,7 +130,7 @@ public class Cat extends Animal implements Comparable<Cat> {
         return a + b;
     }
 
-    public double sumOfTwoElements(String a, String b) {
+    public synchronized double sumOfTwoElements(String a, String b) {
         return Double.parseDouble(a) + Double.parseDouble(b);
     }
 
