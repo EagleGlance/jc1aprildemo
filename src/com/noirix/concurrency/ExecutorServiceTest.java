@@ -1,6 +1,8 @@
 package com.noirix.concurrency;
 
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -23,23 +25,23 @@ public class ExecutorServiceTest {
         // Runnable, return void, nothing, submit and run the task async
         //executor.submit(() -> System.out.println("I'm Runnable task."));
 
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println(Thread.currentThread().getId());
-                System.out.println("I'm Runnable task.");
-            }
-        });
-
-        for (int i = 0; i < 10; i++) {
-            executor.submit(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(Thread.currentThread().getId());
-                    System.out.println("I'm Runnable task ");
-                }
-            });
-        }
+//        executor.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println(Thread.currentThread().getId());
+//                System.out.println("I'm Runnable task.");
+//            }
+//        });
+//
+//        for (int i = 0; i < 10; i++) {
+//            executor.submit(new Runnable() {
+//                @Override
+//                public void run() {
+//                    System.out.println(Thread.currentThread().getId());
+//                    System.out.println("I'm Runnable task ");
+//                }
+//            });
+//        }
 
 
         /* Before Java 8
@@ -88,6 +90,8 @@ public class ExecutorServiceTest {
         };
 
         List<Callable<Integer>> tasks = List.of(task1, task2, task3);
+
+
 
         try {
 
