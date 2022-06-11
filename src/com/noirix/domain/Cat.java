@@ -95,16 +95,6 @@ public class Cat extends Animal implements Comparable<Cat> {
         System.out.println("Some logic");
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Cat cat = (Cat) o;
-        return constantNumber == cat.constantNumber && Double.compare(cat.weight, weight) == 0 && Objects.equals(catName, cat.catName) && Objects.equals(color, cat.color);
-    }
-
     @Override
     public void process() {
         System.out.println("Process realization inside Cat");
@@ -112,21 +102,6 @@ public class Cat extends Animal implements Comparable<Cat> {
 
     public void process(String s, String p) {
         System.out.println(s.toUpperCase() + s.toLowerCase());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), constantNumber, catName, weight, color);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "Cat{" +
-                "constantNumber=" + constantNumber +
-                ", catName='" + catName + '\'' +
-                ", weight=" + weight +
-                ", color='" + color + '\'' +
-                "} ";
     }
 
     //Ctrl + Alt + O - import optimization
@@ -143,5 +118,31 @@ public class Cat extends Animal implements Comparable<Cat> {
     @Override
     public int compareTo(Cat o) {
         return this.catName.compareToIgnoreCase(o.getCatName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Cat cat = (Cat) o;
+        return constantNumber == cat.constantNumber && Double.compare(cat.weight, weight) == 0 && Objects.equals(id, cat.id) && Objects.equals(catName, cat.catName) && Objects.equals(color, cat.color) && gender == cat.gender;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), constantNumber, id, catName, weight, color, gender);
+    }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "constantNumber=" + constantNumber +
+                ", id='" + id + '\'' +
+                ", catName='" + catName + '\'' +
+                ", weight=" + weight +
+                ", color='" + color + '\'' +
+                ", gender=" + gender +
+                "} " + super.toString();
     }
 }
