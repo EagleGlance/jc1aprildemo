@@ -1,8 +1,12 @@
 package com.noirix.domain;
 
-import java.io.Serializable;
+import reflection.CustomAnnotation;
+import reflection.SecondCustomAnnotation;
+
 import java.util.Objects;
 
+@CustomAnnotation
+@SecondCustomAnnotation
 public class Cat extends Animal implements Comparable<Cat> {
 
     public static int count = 0;
@@ -11,6 +15,7 @@ public class Cat extends Animal implements Comparable<Cat> {
     public static final String CONSTANT_WITH_UNDERSCORE = "cat";
 
     //Константа класса
+    @CustomAnnotation
     private final int constantNumber = 10;
 
     private String id; // Long/String/primitive type of unique identifier for object for search this object
@@ -59,6 +64,7 @@ public class Cat extends Animal implements Comparable<Cat> {
         Cat.count = count;
     }
 
+    @SecondCustomAnnotation
     public String getCatName() {
         return catName;
     }
