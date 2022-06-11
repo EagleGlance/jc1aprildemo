@@ -1,9 +1,14 @@
 package reflection;
 
+import com.noirix.domain.Cat;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.util.function.Predicate;
 
 public class CustomReflectionUtil {
 
@@ -18,6 +23,7 @@ public class CustomReflectionUtil {
             System.out.println();
         }
     }
+
     public static void showMethodsInfo(Method[] declaredMethods) {
         for (Method declaredMethod : declaredMethods) {
 
@@ -36,5 +42,30 @@ public class CustomReflectionUtil {
             //System.out.print(declaredMethod.getDeclaredAnnotations().length + " ");
             System.out.println();
         }
+    }
+
+    public static void showConstructorsInfo(Constructor[] constructors) {
+        for (Constructor<?> declaredConstructor : constructors) {
+            System.out.println(Modifier.toString(declaredConstructor.getModifiers()));
+            System.out.println(declaredConstructor.getParameterCount());
+        }
+    }
+
+    public static Cat createCat(Constructor<?> declaredConstructor) {
+        Cat reflectionCat = null;
+
+        Parameter[] parameters = declaredConstructor.getParameters();
+        Predicate<Parameter[]> constructorInvocationRule = (params) -> params.length > 2 && params[0].getType().equals(String.class);
+
+        if (constructorInvocationRule.test(parameters)) {
+            declaredConstructor.setAccessible(true);
+
+            try {
+                reflectionCat = (Cat) declaredConstructor.newInstance("Barsik", 7, "Blue");
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return reflectionCat;
     }
 }

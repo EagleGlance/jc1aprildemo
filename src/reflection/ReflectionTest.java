@@ -1,15 +1,14 @@
 package reflection;
 
+import com.noirix.domain.BooksFields;
 import com.noirix.domain.Cat;
 import com.noirix.domain.Gender;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.TypeVariable;
 
 public class ReflectionTest {
 
@@ -25,8 +24,16 @@ public class ReflectionTest {
         System.out.println(catClass.getSimpleName());
         System.out.println(catClass.getDeclaredFields().length);
         System.out.println(catClass.getFields().length);
-
         System.out.println(catClass.getAnnotations().length);
+
+        Class<?>[] interfaces = catClass.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
+            System.out.println(anInterface);
+        }
+        Class<? super Cat> superclass = catClass.getSuperclass();
+        System.out.println(superclass);
+        System.out.println(BooksFields.class.getSuperclass());
+        System.out.println(ReflectionTest.class.getSuperclass());
 
         Class<CustomAnnotation> customAnnotationClass = CustomAnnotation.class;
 
@@ -35,7 +42,8 @@ public class ReflectionTest {
             System.out.println(annotation.toString());
             Class<? extends Annotation> annotationType = annotation.annotationType();
             if (annotationType.equals(customAnnotationClass)) {
-                System.out.println("Class " + Cat.class.getSimpleName() + " has annotation " + annotation.annotationType().getSimpleName());
+                System.out.println("Class " + Cat.class.getSimpleName() +
+                        " has annotation " + annotation.annotationType().getSimpleName());
             }
         }
 
@@ -56,13 +64,14 @@ public class ReflectionTest {
         System.out.println(cat);
 
 
+        /*Methods reflection*/
         System.out.println("Methods reflection test");
         Cat catForMethods = new Cat();
         Method[] declaredMethods = catClass.getDeclaredMethods();
         CustomReflectionUtil.showMethodsInfo(declaredMethods);
 
         for (Method declaredMethod : declaredMethods) {
-            if (declaredMethod.getName().equals("process")) {
+            if (declaredMethod.getName().equals("getCatName")) {
                 declaredMethod.setAccessible(true);
                 try {
                     System.out.println(declaredMethod.invoke(catForMethods));
@@ -70,6 +79,18 @@ public class ReflectionTest {
                     throw new RuntimeException(e);
                 }
             }
+        }
+
+        System.out.println("Constructors reflection test");
+        Constructor<?>[] declaredConstructors = catClass.getDeclaredConstructors();
+        CustomReflectionUtil.showConstructorsInfo(declaredConstructors);
+        for (Constructor<?> declaredConstructor : declaredConstructors) {
+            System.out.println(CustomReflectionUtil.createCat(declaredConstructor));
+        }
+
+        Package[] packages = Package.getPackages();
+        for (Package aPackage : packages) {
+            System.out.println(aPackage.getName());
         }
     }
 
