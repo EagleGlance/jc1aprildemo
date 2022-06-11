@@ -5,7 +5,11 @@ import com.noirix.domain.Gender;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.TypeVariable;
 
 public class ReflectionTest {
 
@@ -35,23 +39,15 @@ public class ReflectionTest {
             }
         }
 
+        /*Fields reflection*/
         Cat cat = new Cat();
         System.out.println("**********Cat before modification************");
         System.out.println(cat);
-        /*Fields reflection*/
         System.out.println("Fields reflection test");
         Field[] declaredFields = catClass.getDeclaredFields();
+        CustomReflectionUtil.showFieldsInfo(declaredFields);
+
         for (Field declaredField : declaredFields) {
-
-            System.out.print(Modifier.toString(declaredField.getModifiers()) + " ");
-            System.out.print(declaredField.getName() + " ");
-            System.out.print(declaredField.getType() + " ");
-            System.out.print(declaredField.getDeclaredAnnotations().length + " ");
-            System.out.print(declaredField.getGenericType() + " ");
-            System.out.println();
-
-            //00000000000000000000001000001001 = 1 + 8 + (2)^9
-            //00000000000000000000000000001001 = 1 + 8 = 9
             updateColorField(declaredField, cat);
             updateGenderField(declaredField, cat);
         }
@@ -59,6 +55,22 @@ public class ReflectionTest {
         System.out.println("**********Cat after modification************");
         System.out.println(cat);
 
+
+        System.out.println("Methods reflection test");
+        Cat catForMethods = new Cat();
+        Method[] declaredMethods = catClass.getDeclaredMethods();
+        CustomReflectionUtil.showMethodsInfo(declaredMethods);
+
+        for (Method declaredMethod : declaredMethods) {
+            if (declaredMethod.getName().equals("process")) {
+                declaredMethod.setAccessible(true);
+                try {
+                    System.out.println(declaredMethod.invoke(catForMethods));
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     private static void updateColorField(Field field, Cat objectForModification) {
