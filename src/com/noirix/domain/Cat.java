@@ -3,11 +3,14 @@ package com.noirix.domain;
 import com.noirix.reflection.CustomAnnotation;
 import com.noirix.reflection.SecondCustomAnnotation;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @CustomAnnotation
 @SecondCustomAnnotation
-public class Cat extends Animal implements Comparable<Cat> {
+public class Cat extends Animal implements Comparable<Cat>, Serializable {
+
+    private static final long serialVersionUID = 2L;
 
     public static int count = 0;
 
@@ -23,7 +26,7 @@ public class Cat extends Animal implements Comparable<Cat> {
     /*Поля класса = характеристики*/
     private String catName = "Default Cat";
 
-    private double weight = 3;
+    private transient double weight;
 
     private String color = "Black";
 
