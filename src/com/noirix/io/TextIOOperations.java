@@ -2,15 +2,15 @@ package com.noirix.io;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.PrintWriter;
 
-public class IOTask {
-
-    public static final String READ_CONTENT_FILE = "read_binary.txt";
-    public static final String WRITE_CONTENT_FILE = "output_binary.txt";
+public class TextIOOperations {
+    public static final String READ_CONTENT_FILE = "read.txt";
+    public static final String WRITE_CONTENT_FILE = "output.txt";
 
     public static void main(String[] args) {
         //1. Read from file read.txt
@@ -25,8 +25,12 @@ public class IOTask {
     public static int writeTestDataToFile() {
         String usersText = RandomStringUtils.randomAlphabetic(10);
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(READ_CONTENT_FILE)) {
-            fileOutputStream.write(usersText.getBytes(StandardCharsets.UTF_8));
+        try (FileWriter fileWriter = new FileWriter(READ_CONTENT_FILE);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+
+            printWriter.print(usersText);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,12 +39,17 @@ public class IOTask {
     }
 
     public static void readProcessAndReWriteToFile(int bufferSize) {
-        try (FileInputStream fileInputStream = new FileInputStream(READ_CONTENT_FILE);
-             FileOutputStream fileOutputStream = new FileOutputStream(WRITE_CONTENT_FILE)) {
+        try (FileWriter fileWriter = new FileWriter(WRITE_CONTENT_FILE);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+             PrintWriter printWriter = new PrintWriter(bufferedWriter);
+
+             FileReader fileReader = new FileReader(READ_CONTENT_FILE)) {
+
+            char[] buffer = new char[bufferSize];
 
             /*Read file*/
-            byte[] buffer = new byte[bufferSize];
-            int read = fileInputStream.read(buffer);
+            int read = fileReader.read(buffer);
             System.out.println("Size of file is: " + read + " bytes");
 
             /*Process content*/
@@ -48,7 +57,7 @@ public class IOTask {
             String updatedContent = content.toUpperCase();
 
             /*Write updated content to file*/
-            fileOutputStream.write(updatedContent.getBytes(StandardCharsets.UTF_8));
+            printWriter.print(updatedContent);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
