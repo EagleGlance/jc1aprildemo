@@ -1,7 +1,7 @@
 package com.noirix.domain;
 
-import reflection.CustomAnnotation;
-import reflection.SecondCustomAnnotation;
+import com.noirix.reflection.CustomAnnotation;
+import com.noirix.reflection.SecondCustomAnnotation;
 
 import java.util.Objects;
 

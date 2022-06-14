@@ -1,4 +1,4 @@
-package reflection;
+package com.noirix.reflection;
 
 import com.noirix.domain.Cat;
 
@@ -51,6 +51,7 @@ public class CustomReflectionUtil {
         }
     }
 
+    @SuppressWarnings({"unchecked"})
     public static Cat createCat(Constructor<?> declaredConstructor) {
         Cat reflectionCat = null;
 

@@ -1,4 +1,4 @@
-package reflection;
+package com.noirix.reflection;
 
 import com.noirix.domain.BooksFields;
 import com.noirix.domain.Cat;
@@ -9,6 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 
 public class ReflectionTest {
 
@@ -47,11 +48,11 @@ public class ReflectionTest {
             }
         }
 
-        /*Fields reflection*/
+        /*Fields com.noirix.reflection*/
         Cat cat = new Cat();
         System.out.println("**********Cat before modification************");
         System.out.println(cat);
-        System.out.println("Fields reflection test");
+        System.out.println("Fields com.noirix.reflection test");
         Field[] declaredFields = catClass.getDeclaredFields();
         CustomReflectionUtil.showFieldsInfo(declaredFields);
 
@@ -64,8 +65,8 @@ public class ReflectionTest {
         System.out.println(cat);
 
 
-        /*Methods reflection*/
-        System.out.println("Methods reflection test");
+        /*Methods com.noirix.reflection*/
+        System.out.println("Methods com.noirix.reflection test");
         Cat catForMethods = new Cat();
         Method[] declaredMethods = catClass.getDeclaredMethods();
         CustomReflectionUtil.showMethodsInfo(declaredMethods);
@@ -74,14 +75,15 @@ public class ReflectionTest {
             if (declaredMethod.getName().equals("getCatName")) {
                 declaredMethod.setAccessible(true);
                 try {
-                    System.out.println(declaredMethod.invoke(catForMethods));
+                    System .out.println(declaredMethod.invoke(catForMethods));
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     throw new RuntimeException(e);
                 }
+
             }
         }
 
-        System.out.println("Constructors reflection test");
+        System.out.println("Constructors com.noirix.reflection test");
         Constructor<?>[] declaredConstructors = catClass.getDeclaredConstructors();
         CustomReflectionUtil.showConstructorsInfo(declaredConstructors);
         for (Constructor<?> declaredConstructor : declaredConstructors) {
@@ -105,6 +107,7 @@ public class ReflectionTest {
         }
     }
 
+    @Deprecated
     private static void updateGenderField(Field field, Cat objectForModification) {
         if (field.getName().equals(CAT_GENDER_FIELD_NAME)) {
             field.setAccessible(true); //make field public if it's private
