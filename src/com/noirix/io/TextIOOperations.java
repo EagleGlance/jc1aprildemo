@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class TextIOOperations {
     public static final String READ_CONTENT_FILE = "read.txt";
@@ -23,7 +24,10 @@ public class TextIOOperations {
     }
 
     public static int writeTestDataToFile() {
-        String usersText = RandomStringUtils.randomAlphabetic(10);
+        //String usersText = "RandomStringUtils.randomAlphabetic(10)";
+        //String usersText = RandomStringUtils.randomAlphabetic(10);
+        System.out.print("Text your phrase before writing to file: ");
+        String usersText = getUsersInput();
 
         try (FileWriter fileWriter = new FileWriter(READ_CONTENT_FILE);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -38,10 +42,14 @@ public class TextIOOperations {
         return usersText.length();
     }
 
+    private static String getUsersInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
     public static void readProcessAndReWriteToFile(int bufferSize) {
         try (FileWriter fileWriter = new FileWriter(WRITE_CONTENT_FILE);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
              PrintWriter printWriter = new PrintWriter(bufferedWriter);
 
              FileReader fileReader = new FileReader(READ_CONTENT_FILE)) {
@@ -62,4 +70,6 @@ public class TextIOOperations {
             throw new RuntimeException(e);
         }
     }
+
+
 }
